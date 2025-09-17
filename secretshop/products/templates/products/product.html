@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }} — SecretShop{% endblock %}
+
+{% block content %}
+  <a class="text-decoration-none small text-secondary d-inline-block mb-2"
+     href="{% url 'products:catalog' %}">← Назад в каталог</a>
+
+  <div class="row g-4">
+    <div class="col-12 col-md-6">
+      <div class="product-hero ratio ratio-4x3 d-flex align-items-center justify-content-center overflow-hidden">
+        {% if product.image %}
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-100 h-100 object-fit-cover">
+        {% else %}
+          <span class="text-secondary">Фото товара</span>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <h1 class="h3 product-title mb-2">{{ product.name }}</h1>
+      <div class="product-meta mb-3">Категория: {{ product.category.name }}</div>
+
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <span class="price fs-3">{{ product.price }} ₽</span>
+        {% if product.quantity > 0 %}
+          <span class="badge text-bg-success">В наличии: {{ product.quantity }}</span>
+        {% else %}
+          <span class="badge text-bg-secondary">Нет в наличии</span>
+        {% endif %}
+      </div>
+
+      <form method="post" action="{% url 'cart:cart_add' %}" class="mb-4">
+          {% csrf_token %}
+          <input type="hidden" name="product_slug" value="{{ product.slug }}">
+          <input type="hidden" name="return_to" value="product">
+          <div class="input-group" style="max-width: 260px;">
+            <input type="number" name="quantity" class="form-control" min="1" max="{{product.quantity}}" value="1"
+                   {% if product.quantity == 0 %}disabled{% endif %}>
+            <button class="btn btn-primary" type="submit"
+                    {% if product.quantity == 0 %}disabled{% endif %}>В корзину</button>
+          </div>
+      </form>
+
+      <div>
+        <h2 class="h6 mb-2">Описание</h2>
+        <div class="text-body">{{ product.description|linebreaks }}</div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

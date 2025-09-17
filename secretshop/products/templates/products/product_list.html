@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Каталог — SecretShop{% endblock %}
+
+{% block content %}
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 m-0">{{ title }}</h1>
+    <span class="text-secondary small">Товаров: {{ page_obj.paginator.count }}</span>
+  </div>
+
+  <div class="row g-3">
+    {% for p in products %}
+      <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+        <div class="card h-100 shadow-soft">
+          <div class="ratio ratio-4x3 bg-body-tertiary rounded-top overflow-hidden">
+            {% if p.image %}
+              <img src="{{ p.image.url }}" alt="{{ p.name }}" class="w-100 h-100 object-fit-cover">
+            {% else %}
+              <div class="d-flex justify-content-center align-items-center text-secondary h-100">Фото</div>
+            {% endif %}
+          </div>
+
+          <div class="card-body d-flex flex-column">
+            <a class="stretched-link text-decoration-none" href="{{ p.get_absolute_url }}">
+              <h2 class="h6 mb-1">{{ p.name }}</h2>
+            </a>
+            <div class="text-secondary small mb-2">{{ p.category.name }}</div>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <strong class="price">{{ p.price }} ₽</strong>
+              {% if p.quantity > 0 %}
+                <span class="badge text-bg-success">В наличии</span>
+              {% else %}
+                <span class="badge text-bg-secondary">Нет</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="alert alert-secondary">Пока нет товаров.</div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if is_paginated %}
+    <nav class="mt-3" aria-label="Навигация по страницам">
+      <ul class="pagination mb-0">
+        {# Назад #}
+        <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+          <a class="page-link"
+             href="{% if page_obj.has_previous %}?{% if request.GET.q %}q={{ request.GET.q|urlencode }}&{% endif %}page={{ page_obj.previous_page_number }}{% else %}#{% endif %}">
+            ‹ Назад
+          </a>
+        </li>
+
+        {# Вперёд #}
+        <li class="page-item ms-2 {% if not page_obj.has_next %}disabled{% endif %}">
+          <a class="page-link"
+             href="{% if page_obj.has_next %}?{% if request.GET.q %}q={{ request.GET.q|urlencode }}&{% endif %}page={{ page_obj.next_page_number }}{% else %}#{% endif %}">
+            Вперёд ›
+          </a>
+        </li>
+      </ul>
+    </nav>
+  {% endif %}
+
+
+{% endblock %}

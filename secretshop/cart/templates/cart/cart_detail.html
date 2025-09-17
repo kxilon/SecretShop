@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-3">{{ title }}</h1>
+
+{% if items %}
+  <ul class="list-group mb-3">
+  {% for item in items %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div class="me-3">
+        <div class="fw-semibold">{{ item.product.name }}</div>
+        <div class="text-secondary small">
+          {{ item.quantity }} шт × {{ item.product.price }} = {{ item.subtotal }}
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        {# изменить количество #}
+        <form method="post" action="{% url 'cart:cart_change' %}"
+              class="d-inline-flex align-items-center gap-2">
+          {% csrf_token %}
+          <input type="hidden" name="cart_item_id" value="{{ item.id }}">
+          <input type="number" name="quantity" min="0" max="{{ item.product.quantity }}" value="{{ item.quantity }}"
+                 class="form-control form-control-sm" style="width:90px;">
+          <button type="submit" class="btn btn-sm btn-outline-primary">Обновить</button>
+        </form>
+
+        {# удалить (quantity=0) #}
+        <form method="post" action="{% url 'cart:cart_change' %}">
+          {% csrf_token %}
+          <input type="hidden" name="cart_item_id" value="{{ item.id }}">
+          <input type="hidden" name="quantity" value="0">
+          <button type="submit" class="btn btn-sm btn-outline-danger">Удалить</button>
+        </form>
+      </div>
+    </li>
+  {% endfor %}
+  </ul>
+
+  <p><b>Итого:</b> {{ total_qty }} шт. на сумму {{ total_price }}</p>
+  <form method="post" action="{% url 'cart:checkout_notify' %}">
+    {% csrf_token %}
+    <div class="mb-2">
+      <label class="form-label">Имя</label>
+      <input type="text" name="name" class="form-control" required>
+    </div>
+    <div class="mb-2">
+      <label class="form-label">Телефон</label>
+      <input type="tel" name="phone" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Комментарий (опционально)</label>
+      <textarea name="comment" class="form-control" rows="2"></textarea>
+    </div>
+    <button class="btn btn-primary">Оформить заказ</button>
+  </form>
+{% else %}
+  <div class="alert alert-info">Корзина пуста</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,43 @@
+/* Палитра под твой стиль: тёмный + кислотно-зелёный */
+:root{
+  --bg:#0b0c10;
+  --surface:#151923;
+  --text:#e6e9ee;
+  --muted:#9aa4b2;
+  --brand:#39FF14;
+  --brand-600:#2ecc71;
+  --radius:16px;
+  --shadow:0 12px 28px rgba(0,0,0,.35);
+}
+
+body{ background:var(--bg); color:var(--text); font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+a{ color:var(--brand); }
+a:hover{ color:var(--brand-600); }
+
+header, footer{ background:#0f1220; }
+.navbar .nav-link{ color:var(--muted); }
+.navbar .nav-link:hover, .navbar .nav-link.active{ color:var(--brand); }
+
+.container{ max-width:1120px; }
+
+.card{ background:var(--surface); border:none; border-radius:var(--radius); box-shadow:var(--shadow); }
+.shadow-soft{ box-shadow:var(--shadow); }
+.card .badge{ font-weight:600; letter-spacing:.2px; }
+
+.btn{ border-radius:12px; font-weight:600; }
+.btn-primary{ background:var(--brand); border-color:var(--brand); color:#0a0a0a; }
+.btn-primary:hover{ background:var(--brand-600); border-color:var(--brand-600); color:#0a0a0a; }
+
+.price{ color:var(--brand); font-weight:700; }
+.text-bg-success{ background:rgba(57,255,20,.12)!important; color:var(--brand)!important; border:1px solid rgba(57,255,20,.35)!important; }
+.text-bg-secondary{ background:rgba(255,255,255,.08)!important; color:var(--muted)!important; }
+
+.product-hero{ background:linear-gradient(180deg, #1a2030, #101523); border-radius:var(--radius); box-shadow:var(--shadow); }
+
+.alert{ border:none; border-radius:12px; box-shadow:var(--shadow); }
+
+footer .container{ color:var(--muted); }
+
+@media (max-width: 767.98px){
+  .navbar-brand{ font-size:1.1rem; }
+}
