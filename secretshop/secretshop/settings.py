@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-7^-phs3kz@qxhp^b84cszp7gf(z(iipc-y#y6w=2z%p$ofc#g#
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ["secretdragonshop.ru", "www.secretdragonshop.ru", "127.0.0.1"]
+AALLOWED_HOSTS = ["secretdragonshop.ru", "www.secretdragonshop.ru", "127.0.0.1", "localhost"]
 
 CSRF_TRUSTED_ORIGINS = ["https://secretdragonshop.ru", "https://www.secretdragonshop.ru"]
 # Application definition
