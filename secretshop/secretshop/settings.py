@@ -23,11 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-7^-phs3kz@qxhp^b84cszp7gf(z(iipc-y#y6w=2z%p$ofc#g#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+ALLOWED_HOSTS = ["secretdragonshop.ru", "www.secretdragonshop.ru", "127.0.0.1"]
 
-ALLOWED_HOSTS = []
-
-
+CSRF_TRUSTED_ORIGINS = ["https://secretdragonshop.ru", "https://www.secretdragonshop.ru"]
 # Application definition
 
 INSTALLED_APPS = [
@@ -128,6 +127,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
